@@ -366,6 +366,14 @@
     "semestre": 8,
     "requisitos": ["MED294"],
     "color": "#00ffff"
-     }
+  }, 
+  {
+    "codigo": "MED281",
+    "nombre": "Otorrinolaringologia (ANUAL)",
+    "creditos": 1,
+    "semestre": [9, 10],
+    "requisitos": ["MED296"],
+    "color": "#FF8000"
+  }
 ]
   
