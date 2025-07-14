@@ -244,7 +244,7 @@
     "nombre": "Topicos de Investigacion en Salud I",
     "creditos": 4,
     "semestre": 5,
-    "requisitos": ["FM007"],
+    "requisitos": ["FMM007"],
     "color": "#f08080"
 },
      {
@@ -299,7 +299,7 @@
     "codigo": "MED287",
     "nombre": "Cirugia (ANUAL)",
     "creditos": 5,
-    "semestre": 7,
+    "semestre": 7,8
     "requisitos": ["BIO288", "MED260"],
     "color": "#0000ff"
 },
@@ -323,11 +323,33 @@
     "codigo": "MED296",
     "nombre": "Medicina Interna (ANUAL)",
     "creditos": 20,
-    "semestre": 7,
+    "semestre": 7,8
     "requisitos": ["BIO288", "MED249", "MED257", "MED260"],
     "color": "#109dfa"
+},
+     {
+    "codigo": "MED245",
+    "nombre": "Psiquiatria",
+    "creditos": 6,
+    "semestre": 8,
+    "requisitos": ["MED131"],
+    "color": "#ffff00"
+  },
+     {
+    "codigo": "MED293",
+    "nombre": "Salud Publica II",
+    "creditos": 4,
+    "semestre": 8,
+    "requisitos": ["MED292"],
+    "color": "#cd5c5c"
+  },
+     {
+    "codigo": "MED295",
+    "nombre": "Patologia II",
+    "creditos": 6,
+    "semestre": 8,
+    "requisitos": ["MED294"],
+    "color": "#00ffff"
      }
 ]
-  
-  
   
