@@ -309,7 +309,7 @@
   "creditos": 5,
   "semestre": 8,
   "requisitos": ["BIO288", "MED260"],
-  "color": "#000ff"
+  "color": "#0000ff"
 },
      {
     "codigo": "MED292",
