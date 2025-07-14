@@ -48,12 +48,27 @@ async function cargarProgreso() {
   const snap = await ref.get();
   progreso = snap.exists ? snap.data() : {};
 }
-
-function renderMalla() {
+function estaAprobado(ramo, progreso, semestresAprobados) {
+  if (ramo.tipo === "anual") {
+    return progreso[ramo.codigo] &&
+           semestresAprobados.includes("7") &&
+           semestresAprobados.includes("8");
+  } else {
+    return progreso[ramo.codigo];
+  }
+  function renderMalla() {
   mallaDiv.innerHTML = '';
 
-  const semestres = [...new Set(datosMalla.map(r => r.semestre))].sort((a, b) => a - b);
+  const semestres = [...new Set(datosMalla.flatMap(r => r.semestre))].sort((a, b) => a - b);
   let aprobados = 0;
+
+  const semestresAprobados = Object.entries(progreso)
+    .map(([codigo]) => {
+      const ramo = datosMalla.find(r => r.codigo === codigo);
+      return ramo?.semestre;
+    })
+    .flat()
+    .map(s => s.toString());
 
   semestres.forEach(semestre => {
     const contenedor = document.createElement("div");
@@ -67,7 +82,7 @@ function renderMalla() {
     fila.className = "malla-grid";
 
     datosMalla
-      .filter(r => r.semestre === semestre)
+      .filter(r => r.semestre.includes(semestre))
       .forEach(ramo => {
         const div = document.createElement("div");
         div.className = "ramo bloqueado";
@@ -77,8 +92,12 @@ function renderMalla() {
         const requisitos = ramo.requisitos?.join(", ") || "Ninguno";
         div.title = `Créditos: ${ramo.creditos}\nRequisitos: ${requisitos}`;
 
-        const desbloqueado = !ramo.requisitos.length || ramo.requisitos.every(r => progreso[r]);
-        const aprobado = progreso[ramo.codigo];
+        const desbloqueado = !ramo.requisitos.length || ramo.requisitos.every(codigoReq => {
+          const ramoReq = datosMalla.find(r => r.codigo === codigoReq);
+          return ramoReq && estaAprobado(ramoReq, progreso, semestresAprobados);
+        });
+
+        const aprobado = estaAprobado(ramo, progreso, semestresAprobados);
 
         if (desbloqueado) {
           div.classList.remove("bloqueado");
@@ -98,6 +117,9 @@ function renderMalla() {
           div.classList.add("aprobado");
           div.innerHTML += " ✅";
           aprobados++;
+        } else if (ramo.tipo === "anual" && progreso[ramo.codigo]) {
+          div.classList.add("pendiente-anual");
+          div.innerHTML += " ⏳";
         }
 
         fila.appendChild(div);
