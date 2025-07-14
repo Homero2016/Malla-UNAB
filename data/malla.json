@@ -88,14 +88,6 @@
     "color": "#2980b9"
   },
   {
-    "codigo": "MOR330",
-    "nombre": "Anatomía Humana I",
-    "creditos": 6,
-    "semestre": 2,
-    "requisitos": [],
-    "color": "#16a085"
-  },
-  {
     "codigo": "MOR332",
     "nombre": "Anatomía Humana II",
     "creditos": 6,
@@ -142,8 +134,200 @@
     "semestre": 3,
     "requisitos": ["MED017"],
     "color": "#f98cd2"
+},
+  {
+    "codigo": "BIO148",
+    "nombre": "Genetica y Bio. Molecular humana",
+    "creditos": 4,
+    "semestre": 4,
+    "requisitos": ["BIO130","BIO131"],
+    "color": "#008f39"
+},
+  {
+    "codigo": "BIO242",
+    "nombre": "Laborarotio de Genetica y Bio. Molecular humana",
+    "creditos": 4,
+    "semestre": 4,
+    "requisitos": ["BIO130","BIO131"],
+    "color": "#77dd77"
+},
+  {
+    "codigo": "BIO320",
+    "nombre": "Histologia",
+    "creditos": 4,
+    "semestre": 4,
+    "requisitos": ["BIO130","BIO131", "MOR332", "MOR333"],
+    "color": "#a349a4"
+},
+  {
+    "codigo": "BIO321",
+    "nombre": "Laboratorio de Histologia",
+    "creditos": 4,
+    "semestre": 4,
+    "requisitos": ["BIO130","BIO131", "MOR332", "MOR333"],
+    "color": "#e6ccef"
+},
+     {
+    "codigo": "BIO377",
+    "nombre": "Fisiologia humana II",
+    "creditos": 7,
+    "semestre": 4,
+    "requisitos": ["BIO376", "MOR333", "MOR332"],
+    "color": "#00ffff"
+ },
+     {
+    "codigo": "CEG003",
+    "nombre": "Electivo de formacion general III",
+    "creditos": 2,
+    "semestre": 4,
+    "requisitos": [],
+    "color": "#e67e22"
+},
+     {
+    "codigo": "MED122",
+    "nombre": "Medico paciente II",
+    "creditos": 4,
+    "semestre": 4,
+    "requisitos": ["MED121"],
+    "color": "#f98cd2"
+},
+     {
+    "codigo": "MED131",
+    "nombre": "Psicologia",
+    "creditos": 3,
+    "semestre": 4,
+    "requisitos": [],
+    "color": "#ffff00"
+},
+     {
+    "codigo": "BIO250",
+    "nombre": "Microbiologia",
+    "creditos": 4,
+    "semestre": 5,
+    "requisitos": ["BIO148", "BIO242"],
+    "color": "#64c27b"
+},
+     {
+    "codigo": "BIO251",
+    "nombre": "Laboratorio de Microbiologia",
+    "creditos": 2,
+    "semestre": 5,
+    "requisitos": ["BIO148", "BIO242"],
+    "color": "#9bfab0"
+},
+     {
+    "codigo": "MED250",
+    "nombre": "Semiologia Medica",
+    "creditos": 14,
+    "semestre": 5,
+    "requisitos": ["MOR332", "MOR333", "MED122", "BIO377"],
+    "color": "#109dfa"
+},
+     {
+    "codigo": "MED257",
+    "nombre": "Inmunologia y Nutricion",
+    "creditos": 4,
+    "semestre": 5,
+    "requisitos": ["BIO266", "BIO320", "BIO321", "BIO377"],
+    "color": "#23bac4"
+},
+     {
+    "codigo": "MED258",
+    "nombre": "Etica Medica I",
+    "creditos": 3,
+    "semestre": 5,
+    "requisitos": ["MED122", "MED131"],
+    "color": "#cd5c5c"
+},
+     {
+    "codigo": "MED278",
+    "nombre": "Topicos de Investigacion en Salud I",
+    "creditos": 4,
+    "semestre": 5,
+    "requisitos": ["FM007"],
+    "color": "#f08080"
+},
+     {
+    "codigo": "BIO288",
+    "nombre": "Farmacologia",
+    "creditos": 5,
+    "semestre": 6,
+    "requisitos": ["BIO266", "BIO377"],
+    "color": "#ab49cc"
+},
+     {
+    "codigo": "MED249",
+    "nombre": "Medicina Orientada al Problema",
+    "creditos": 14,
+    "semestre": 6,
+    "requisitos": ["MED250", "BIO377"],
+    "color": "#109dfa"
+},
+     {
+    "codigo": "MED259",
+    "nombre": "Etica Medica II",
+    "creditos": 3,
+    "semestre": 6,
+    "requisitos": ["MED258"],
+    "color": "#cd5c5c"
+},
+     {
+    "codigo": "MED260",
+    "nombre": "Fisiopatologia Humana",
+    "creditos": 6,
+    "semestre": 6,
+    "requisitos": ["BIO377"],
+    "color": "#00ffff"
+},
+     {
+    "codigo": "MED279",
+    "nombre": "Topicos de Investigacion en Salud II",
+    "creditos": 4,
+    "semestre": 6,
+    "requisitos": ["MED278"],
+    "color": "#f08080"
+},
+     {
+    "codigo": "MED244",
+    "nombre": "Neurologia",
+    "creditos": 6,
+    "semestre": 7,
+    "requisitos": ["BIO288", "MED249"],
+    "color": "#ffff00"
+},
+     {
+    "codigo": "MED287",
+    "nombre": "Cirugia (ANUAL)",
+    "creditos": 5,
+    "semestre": 7,
+    "requisitos": ["BIO288", "MED260"],
+    "color": "#0000ff"
+},
+     {
+    "codigo": "MED292",
+    "nombre": "Salud Publica I",
+    "creditos": 4,
+    "semestre": 7,
+    "requisitos": ["MED279"],
+    "color": "#cd5c5c"
+},
+     {
+    "codigo": "MED294",
+    "nombre": "Patologia I",
+    "creditos": 6,
+    "semestre": 7,
+    "requisitos": ["BIO320", "BIO321", "BIO377"],
+    "color": "#00ffff"
+},
+     {
+    "codigo": "MED296",
+    "nombre": "Medicina Interna (ANUAL)",
+    "creditos": 20,
+    "semestre": 7,
+    "requisitos": ["BIO288", "MED249", "MED257", "MED260"],
+    "color": "#109dfa"
      }
 ]
-          
+  
   
   
