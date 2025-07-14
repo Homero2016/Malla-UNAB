@@ -84,16 +84,52 @@ function renderMalla() {
 
     const fila = document.createElement("div");
     fila.className = "malla-grid";
+datosMalla
+  .filter(r => {
+    const semestresRamo = Array.isArray(r.semestre) ? r.semestre : [r.semestre];
+    return semestresRamo.includes(semestre);
+  })
+  .forEach(ramo => {
+    const div = document.createElement("div");
+    div.className = "ramo bloqueado";
+    div.style.background = ramo.color;
+    div.textContent = ramo.nombre;
 
-    datosMalla
-      .filter(r => {
-        const semestresRamo = Array.isArray(r.semestre) ? r.semestre : [r.semestre];
-        return semestresRamo.includes(semestre);
-      })
-      .forEach(ramo => {
-        // tu código para crear el div, aplicar clases, eventos, etc.
-      });
+    const requisitos = ramo.requisitos?.join(", ") || "Ninguno";
+    div.title = `Créditos: ${ramo.creditos}\nRequisitos: ${requisitos}`;
 
+    const desbloqueado = !ramo.requisitos.length || ramo.requisitos.every(codigoReq => {
+      const ramoReq = datosMalla.find(r => r.codigo === codigoReq);
+      return ramoReq && estaAprobado(ramoReq, progreso, semestresAprobados);
+    });
+
+    const aprobado = estaAprobado(ramo, progreso, semestresAprobados);
+
+    if (desbloqueado) {
+      div.classList.remove("bloqueado");
+      div.classList.add("desbloqueado");
+      div.onclick = async () => {
+        if (progreso[ramo.codigo]) {
+          delete progreso[ramo.codigo];
+        } else {
+          progreso[ramo.codigo] = true;
+        }
+        await db.collection("progresos").doc(usuario.uid).set(progreso);
+        renderMalla();
+      };
+    }
+
+    if (aprobado) {
+      div.classList.add("aprobado");
+      div.innerHTML += " ✅";
+      aprobados++;
+    } else if (ramo.tipo === "anual" && progreso[ramo.codigo]) {
+      div.classList.add("pendiente-anual");
+      div.innerHTML += " ⏳";
+    }
+
+    fila.appendChild(div);
+  });
     contenedor.appendChild(fila);
     mallaDiv.appendChild(contenedor);
   });
