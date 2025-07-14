@@ -76,7 +76,7 @@
     "nombre": "Laboratorio Anatomía Humana I",
     "creditos": 6,
     "semestre": 2,
-    "requisitos": ["MOR330"],
+    "requisitos": [],
     "color": "#f39c12"
   },
   {
@@ -86,5 +86,63 @@
     "semestre": 2,
     "requisitos": ["QUI109"],
     "color": "#2980b9"
-  }
+  },
+  {
+    "codigo": "MOR330",
+    "nombre": "Anatomía Humana I",
+    "creditos": 6,
+    "semestre": 2,
+    "requisitos": [],
+    "color": "#16a085"
+  },
+  {
+    "codigo": "MOR332",
+    "nombre": "Anatomía Humana II",
+    "creditos": 6,
+    "semestre": 3,
+    "requisitos": ["MOR330", "MOR331"],
+    "color": "#16a085"
+  },
+  {
+    "codigo": "MOR333",
+    "nombre": "Laboratorio Anatomía Humana II",
+    "creditos": 6,
+    "semestre": 3,
+    "requisitos": ["MOR330", "MOR331"],
+    "color": "#f39c12"
+  },
+   {
+    "codigo": "BIO266",
+    "nombre": "Bioquimica",
+    "creditos": 6,
+    "semestre": 3,
+    "requisitos": ["QUI024"],
+    "color": "#6dc36d"
+   },
+     {
+    "codigo": "BIO376",
+    "nombre": "Fisiologia humana I",
+    "creditos": 7,
+    "semestre": 3,
+    "requisitos": ["BIO130", "BIO131", "FMF019", "MOR330", "MOR331"],
+    "color": "#00ffff"
+ },
+     {
+    "codigo": "HUF124",
+    "nombre": "Antropologia filosofica",
+    "creditos": 3,
+    "semestre": 3,
+    "requisitos": [],
+    "color": "#d0bdf6"
+ },
+     {
+    "codigo": "MED121",
+    "nombre": "Medico paciente I",
+    "creditos": 4,
+    "semestre": 3,
+    "requisitos": ["MED017"],
+    "color": "#f98cd2"
 ]
+          
+  
+  
