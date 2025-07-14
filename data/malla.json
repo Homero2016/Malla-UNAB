@@ -305,6 +305,14 @@
   "requisitos": ["BIO288", "MED260"],
   "color": "#0000ff"
 },
+  {
+  "codigo": "MED287",
+  "nombre": "Cirugia (ANUAL)",
+  "creditos": 5,
+  "semestre": ["7", "8"],
+  "requisitos": ["BIO288", "MED260"],
+  "color": "#000ff"
+},
      {
     "codigo": "MED292",
     "nombre": "Salud Publica I",
