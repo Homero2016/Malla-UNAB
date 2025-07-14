@@ -1,0 +1,1 @@
+// script.js con lógica de desbloqueo, aprobación, progreso y Firebase

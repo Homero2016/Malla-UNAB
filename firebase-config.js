@@ -1,0 +1,1 @@
+// firebase-config.js con claves de conexión (a completar por la usuaria)
