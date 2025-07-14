@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <body>
   <div id="login-container">
     <h1>Malla Medicina</h1>
     <button id="loginBtn">Iniciar sesión con Google</button>
@@ -18,10 +17,24 @@
     <div id="resumen"></div>
     <div id="malla"></div>
   </div>
+
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Verificar que el botón de login existe y está listo
+    document.addEventListener("DOMContentLoaded", () => {
+      const loginBtn = document.getElementById("loginBtn");
+      if (loginBtn) {
+        console.log("Botón de login detectado correctamente.");
+      } else {
+        console.error("No se encontró el botón de login.");
+      }
+    });
+  </script>
+
   <script src="main.js"></script>
 </body>
 </html>
