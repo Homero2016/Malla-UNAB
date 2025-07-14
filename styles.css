@@ -62,3 +62,17 @@ body {
 .aprobado {
   background: #2ecc71 !important;
 }
+.pendiente-anual {
+  border: 2px dashed #ffa500;
+  opacity: 0.85;
+  position: relative;
+}
+
+.pendiente-anual::after {
+  content: "Pendiente (anual)";
+  font-size: 0.7em;
+  color: #ffa500;
+  position: absolute;
+  bottom: 4px;
+  right: 6px;
+}
