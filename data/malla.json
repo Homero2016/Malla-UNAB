@@ -430,8 +430,66 @@
     "semestre": [9, 10],
     "requisitos": [],
     "color": "#009b94"
-    }
+},
+  {
+    "codigo": "MED374",
+    "nombre": "Internado de Pediatria (ANUAL)",
+    "creditos": 44,
+    "semestre": [11, 12],
+    "requisitos": ["MED281", "MED282", "MED283", "MED284", "MED285", "MED297", "MED298"],
+    "color": "#ffd700"
+},
+  {
+    "codigo": "MED375",
+    "nombre": "Internado de Cirugia (ANUAL)",
+    "creditos": 44,
+    "semestre": [11, 12],
+    "requisitos": ["MED281", "MED282", "MED283", "MED284", "MED285", "MED297", "MED298"],
+    "color": "#0000ff"
+},
+  {
+    "codigo": "MED376",
+    "nombre": "Internado de Obstetricia y Ginecologia (ANUAL)",
+    "creditos": 44,
+    "semestre": [11, 12],
+    "requisitos": ["MED281", "MED282", "MED283", "MED284", "MED285", "MED297", "MED298"],
+    "color": "#a52019"
+},
+  {
+    "codigo": "MED300",
+    "nombre": "Internado Electivo (ANUAL)",
+    "creditos": 7,
+    "semestre": [13, 14],
+    "requisitos": ["BIO130", "BIO131", "FMM007", "MED016", "MED013", "QUI109", "FMF019", "MED014", "MED017", "MOR330", "MOR331", "QUI024", "BIO266", "BIO376", "HUF124", "MED121", "MOR332", "MOR333", "BIO148", "BIO242", "BIO320", "BIO321", "BIO377", "MED015", "MED122", "MED131", "BIO250", "BIO251", "MED250", "MED257", "MED258", "MED278", "BIO288", "MED249", "MED259", "MED260", "MED279", "MED244", "MED287", "MED292", "MED294", "MED296", "MED245", "MED293", "MED295", "MED281", "MED282", "MED283", "MED284", "MED285", "MED297", "MED298", "MED399"],
+    "color": "#00ff00"
+},
+  {
+    "codigo": "MED377",
+    "nombre": "Internado de Medicina Interna (ANUAL)",
+    "creditos": 44,
+    "semestre": [13, 14],
+    "requisitos": ["MED281", "MED282", "MED283", "MED284", "MED285", "MED297", "MED298", "MED399"],
+    "color": "#109dfa"
+},
+  {
+    "codigo": "MED378",
+    "nombre": "Internado de Medicina Comunitaria (ANUAL)",
+    "creditos": 9,
+    "semestre": [13, 14],
+    "requisitos": ["BIO130", "BIO131", "FMM007", "MED016", "MED013", "QUI109", "FMF019", "MED014", "MED017", "MOR330", "MOR331", "QUI024", "BIO266", "BIO376", "HUF124", "MED121", "MOR332", "MOR333", "BIO148", "BIO242", "BIO320", "BIO321", "BIO377", "MED015", "MED122", "MED131", "BIO250", "BIO251", "MED250", "MED257", "MED258", "MED278", "BIO288", "MED249", "MED259", "MED260", "MED279", "MED244", "MED287", "MED292", "MED294", "MED296", "MED245", "MED293", "MED295", "MED281", "MED282", "MED283", "MED284", "MED285", "MED297", "MED298", "MED399"],
+    "color": "#40e0d0"
+},
+  {
+    "codigo": "MED380",
+    "nombre": "Internado Integrado (ANUAL)",
+    "creditos": 5,
+    "semestre": [13, 14],
+    "requisitos": ["MED374", "MED375", "MED376"],
+    "color": "#e44b8d"
+  }
 ]
+    
+
       
       
 
