@@ -4,31 +4,61 @@ body {
   padding: 0;
   background: #f4f4f4;
 }
-#malla {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+
+#login-container, #app {
+  text-align: center;
   padding: 20px;
 }
+
+#resumen {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.semestre {
+  margin: 30px auto;
+  max-width: 800px;
+  background: #fff;
+  border-left: 6px solid #3498db;
+  padding: 10px;
+  box-shadow: 0 0 10px #ddd;
+}
+
+.semestre h3 {
+  margin-top: 0;
+  color: #3498db;
+  text-align: left;
+}
+
+.malla-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
 .ramo {
   border-radius: 8px;
-  margin: 8px;
   padding: 10px;
   color: #fff;
   cursor: pointer;
-  width: 140px;
+  width: 160px;
   text-align: center;
   font-size: 14px;
-  transition: 0.3s;
+  position: relative;
+  transition: transform 0.2s;
 }
+
+.ramo:hover {
+  transform: scale(1.03);
+}
+
 .bloqueado {
-  background: #ccc;
+  background: #ccc !important;
   text-decoration: line-through;
   cursor: not-allowed;
 }
-.desbloqueado {
-  opacity: 1;
-}
+
 .aprobado {
   background: #2ecc71 !important;
 }
