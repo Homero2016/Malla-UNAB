@@ -303,9 +303,9 @@
   "requisitos": ["BIO288", "MED260"],
   "color": "#0000ff"
 },
-  {
+    {
   "codigo": "MED287",
-  "nombre": "Cirugia (ANUAL)",
+  "nombre": "Cirugía (ANUAL)",
   "creditos": 5,
   "semestre": 8,
   "requisitos": ["BIO288", "MED260"],
