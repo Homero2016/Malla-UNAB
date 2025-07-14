@@ -296,12 +296,14 @@
     "color": "#ffff00"
 },
      {
-    "codigo": "MED287",
-    "nombre": "Cirugia (ANUAL)",
-    "creditos": 5,
-    "semestre": ["7", "8"],
-    "requisitos": ["BIO288", "MED260"],
-    "color": "#0000ff"
+  "codigo": "MED287",
+  "nombre": "Cirugía (ANUAL)",
+  "creditos": 5,
+  "semestre": ["7"], // visualmente en 7°
+  "anual": true,
+  "bloques": ["7", "8"], // lógica para requisitos
+  "requisitos": ["BIO288", "MED260"],
+  "color": "#0000ff"
 },
      {
     "codigo": "MED292",
