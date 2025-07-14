@@ -367,13 +367,72 @@
     "requisitos": ["MED294"],
     "color": "#00ffff"
   }, 
-  {
+     {
     "codigo": "MED281",
     "nombre": "Otorrinolaringologia (ANUAL)",
     "creditos": 1,
     "semestre": [9, 10],
     "requisitos": ["MED296"],
-    "color": "#FF8000"
-  }
+    "color": "#ff8000"
+  },
+    {
+    "codigo": "MED282",
+    "nombre": "Dermatologia (ANUAL)",
+    "creditos": 1,
+    "semestre": [9, 10],
+    "requisitos": ["MED296"],
+    "color": "#ff69b4"
+  },
+    {
+    "codigo": "MED283",
+    "nombre": "Urologia (ANUAL)",
+    "creditos": 1,
+    "semestre": [9, 10],
+    "requisitos": ["MED296"],
+    "color": "#b2ffff"
+  },
+    {
+    "codigo": "MED284",
+    "nombre": "Oftamologia (ANUAL)",
+    "creditos": 1,
+    "semestre": [9, 10],
+    "requisitos": ["MED296"],
+    "color": "#e0b0ff"
+  },
+    {
+    "codigo": "MED285",
+    "nombre": "Medicina Legal (ANUAL)",
+    "creditos": 1,
+    "semestre": [9, 10],
+    "requisitos": ["MED296"],
+    "color": "#332f2c"
+  },
+    {
+    "codigo": "MED297",
+    "nombre": "Pediatria (ANUAL)",
+    "creditos": 11,
+    "semestre": [9, 10],
+    "requisitos": ["MED296"],
+    "color": "#ffd700"
+ },
+    {
+    "codigo": "MED298",
+    "nombre": "Obstetricia y Ginecologia (ANUAL)",
+    "creditos": 11,
+    "semestre": [9, 10],
+    "requisitos": ["MED296"],
+    "color": "#a52019"
+ },
+    {
+    "codigo": "MED399",
+    "nombre": "Ingles Basico",
+    "creditos": 1,
+    "semestre": [9, 10],
+    "requisitos": [],
+    "color": "#009b94"
+    }
 ]
+      
+      
+
   
