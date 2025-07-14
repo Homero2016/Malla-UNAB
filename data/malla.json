@@ -1,0 +1,90 @@
+[
+  {
+    "codigo": "BIO130",
+    "nombre": "Biología Celular",
+    "creditos": 4,
+    "semestre": 1,
+    "requisitos": [],
+    "color": "#3498db"
+  },
+  {
+    "codigo": "BIO131",
+    "nombre": "Laboratorio Biología Celular",
+    "creditos": 3,
+    "semestre": 1,
+    "requisitos": ["BIO130"],
+    "color": "#1abc9c"
+  },
+  {
+    "codigo": "CEG001",
+    "nombre": "Electivo Formación General I",
+    "creditos": 2,
+    "semestre": 1,
+    "requisitos": [],
+    "color": "#e67e22"
+  },
+  {
+    "codigo": "FMM007",
+    "nombre": "Matemáticas Avanzada",
+    "creditos": 8,
+    "semestre": 1,
+    "requisitos": [],
+    "color": "#9b59b6"
+  },
+  {
+    "codigo": "MED016",
+    "nombre": "Introducción a la Medicina I",
+    "creditos": 4,
+    "semestre": 1,
+    "requisitos": [],
+    "color": "#e74c3c"
+  },
+  {
+    "codigo": "QUI109",
+    "nombre": "Química General",
+    "creditos": 6,
+    "semestre": 1,
+    "requisitos": [],
+    "color": "#2ecc71"
+  },
+  {
+    "codigo": "FMF019",
+    "nombre": "Física",
+    "creditos": 6,
+    "semestre": 2,
+    "requisitos": ["FMM007"],
+    "color": "#2c3e50"
+  },
+  {
+    "codigo": "MED017",
+    "nombre": "Introducción a la Medicina II",
+    "creditos": 6,
+    "semestre": 2,
+    "requisitos": ["MED016"],
+    "color": "#c0392b"
+  },
+  {
+    "codigo": "MOR330",
+    "nombre": "Anatomía Humana I",
+    "creditos": 6,
+    "semestre": 2,
+    "requisitos": [],
+    "color": "#16a085"
+  },
+  {
+    "codigo": "MOR331",
+    "nombre": "Laboratorio Anatomía Humana I",
+    "creditos": 6,
+    "semestre": 2,
+    "requisitos": ["MOR330"],
+    "color": "#f39c12"
+  },
+  {
+    "codigo": "QUI024",
+    "nombre": "Química Orgánica",
+    "creditos": 6,
+    "semestre": 2,
+    "requisitos": ["QUI109"],
+    "color": "#2980b9"
+  }
+]
