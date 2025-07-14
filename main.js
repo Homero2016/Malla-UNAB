@@ -57,17 +57,19 @@ function estaAprobado(ramo, progreso, semestresAprobados) {
     return progreso[ramo.codigo];
   }
 } // <-- CIERRE CORRECTO AQUÍ
-
 function renderMalla() {
   mallaDiv.innerHTML = '';
 
-  const semestres = [...new Set(datosMalla.flatMap(r => r.semestre))].sort((a, b) => a - b);
+  const semestres = [...new Set(
+    datosMalla.flatMap(r => Array.isArray(r.semestre) ? r.semestre : [r.semestre])
+  )].sort((a, b) => a - b);
+
   let aprobados = 0;
 
   const semestresAprobados = Object.entries(progreso)
     .map(([codigo]) => {
       const ramo = datosMalla.find(r => r.codigo === codigo);
-      return ramo?.semestre;
+      return ramo ? (Array.isArray(ramo.semestre) ? ramo.semestre : [ramo.semestre]) : [];
     })
     .flat()
     .map(s => s.toString());
@@ -84,47 +86,12 @@ function renderMalla() {
     fila.className = "malla-grid";
 
     datosMalla
-      .filter(r => r.semestre.includes(semestre))
+      .filter(r => {
+        const semestresRamo = Array.isArray(r.semestre) ? r.semestre : [r.semestre];
+        return semestresRamo.includes(semestre);
+      })
       .forEach(ramo => {
-        const div = document.createElement("div");
-        div.className = "ramo bloqueado";
-        div.style.background = ramo.color;
-        div.textContent = ramo.nombre;
-
-        const requisitos = ramo.requisitos?.join(", ") || "Ninguno";
-        div.title = `Créditos: ${ramo.creditos}\nRequisitos: ${requisitos}`;
-
-        const desbloqueado = !ramo.requisitos.length || ramo.requisitos.every(codigoReq => {
-          const ramoReq = datosMalla.find(r => r.codigo === codigoReq);
-          return ramoReq && estaAprobado(ramoReq, progreso, semestresAprobados);
-        });
-
-        const aprobado = estaAprobado(ramo, progreso, semestresAprobados);
-
-        if (desbloqueado) {
-          div.classList.remove("bloqueado");
-          div.classList.add("desbloqueado");
-          div.onclick = async () => {
-            if (progreso[ramo.codigo]) {
-              delete progreso[ramo.codigo];
-            } else {
-              progreso[ramo.codigo] = true;
-            }
-            await db.collection("progresos").doc(usuario.uid).set(progreso);
-            renderMalla();
-          };
-        }
-
-        if (aprobado) {
-          div.classList.add("aprobado");
-          div.innerHTML += " ✅";
-          aprobados++;
-        } else if (ramo.tipo === "anual" && progreso[ramo.codigo]) {
-          div.classList.add("pendiente-anual");
-          div.innerHTML += " ⏳";
-        }
-
-        fila.appendChild(div);
+        // tu código para crear el div, aplicar clases, eventos, etc.
       });
 
     contenedor.appendChild(fila);
@@ -133,4 +100,4 @@ function renderMalla() {
 
   const porcentaje = Math.round((aprobados / datosMalla.length) * 100);
   resumen.textContent = `Avance: ${aprobados}/${datosMalla.length} ramos (${porcentaje}%)`;
-} // <-- CIERRA LA FUNCION RENDERMALLA AQUÍ
+}
