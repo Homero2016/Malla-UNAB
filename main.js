@@ -56,7 +56,9 @@ function estaAprobado(ramo, progreso, semestresAprobados) {
   } else {
     return progreso[ramo.codigo];
   }
-  function renderMalla() {
+} // <-- CIERRE CORRECTO AQUÍ
+
+function renderMalla() {
   mallaDiv.innerHTML = '';
 
   const semestres = [...new Set(datosMalla.flatMap(r => r.semestre))].sort((a, b) => a - b);
@@ -131,4 +133,4 @@ function estaAprobado(ramo, progreso, semestresAprobados) {
 
   const porcentaje = Math.round((aprobados / datosMalla.length) * 100);
   resumen.textContent = `Avance: ${aprobados}/${datosMalla.length} ramos (${porcentaje}%)`;
-}
+} // <-- CIERRA LA FUNCION RENDERMALLA AQUÍ
