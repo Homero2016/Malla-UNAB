@@ -299,7 +299,7 @@
     "codigo": "MED287",
     "nombre": "Cirugia (ANUAL)",
     "creditos": 5,
-    "semestre": ["7", "8"]
+    "semestre": ["7", "8"],
     "requisitos": ["BIO288", "MED260"],
     "color": "#0000ff"
 },
@@ -323,7 +323,7 @@
     "codigo": "MED296",
     "nombre": "Medicina Interna (ANUAL)",
     "creditos": 20,
-    "semestre": ["7", "8"]
+    "semestre": ["7", "8"],
     "requisitos": ["BIO288", "MED249", "MED257", "MED260"],
     "color": "#109dfa"
 },
