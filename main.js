@@ -55,10 +55,15 @@ let datosMalla = [];
 let progreso = {};
 
 // Evento login: popup en PC, redirect en celular/tablet
-loginBtn.onclick = () => {
+loginBtn.onclick = async () => {
   const provider = new firebase.auth.GoogleAuthProvider();
-  if (window.innerWidth < 768) {
-    auth.signInWithRedirect(provider);
+  try {
+    const result = await auth.signInWithPopup(provider);
+    // Puedes usar result.user si quieres hacer algo aquí
+  } catch (error) {
+    console.error("Error al iniciar sesión con popup:", error);
+  }
+};
   } else {
     auth.signInWithPopup(provider).catch(() => {
       auth.signInWithRedirect(provider);
