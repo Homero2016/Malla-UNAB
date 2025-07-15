@@ -42,21 +42,39 @@ let usuario = null;
 let datosMalla = [];
 let progreso = {};
 
-// LOGIN CON POPUP
-loginBtn.onclick = async () => {
+// Login con redirect
+loginBtn.onclick = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
-  try {
-    await auth.signInWithPopup(provider);
-  } catch (error) {
-    console.error("Error al iniciar sesión con popup:", error);
-    alert("No se pudo iniciar sesión. Intenta de nuevo.");
-  }
+  auth.signInWithRedirect(provider);
 };
 
-// OBSERVADOR DE CAMBIOS EN SESIÓN
+// Procesar resultado de redirect al cargar la página (una sola vez)
+auth.getRedirectResult()
+  .then(async (result) => {
+    if (result.user) {
+      usuario = result.user;
+      loginContainer.style.display = "none";
+      appContainer.style.display = "block";
+      try {
+        await cargarMalla();
+        await cargarProgreso();
+        renderMalla();
+      } catch (e) {
+        console.error("Error cargando o renderizando:", e);
+      }
+    }
+  })
+  .catch((error) => {
+    console.error("Error en getRedirectResult:", error);
+  });
+
+// Escuchar cambios de estado (esto maneja que el usuario ya esté logueado)
 auth.onAuthStateChanged(async (user) => {
   if (user) {
-    console.log("Usuario autenticado:", user.email);
+    if (usuario && usuario.uid === user.uid) {
+      // Ya estamos con ese usuario, no hacer nada
+      return;
+    }
     usuario = user;
     loginContainer.style.display = "none";
     appContainer.style.display = "block";
@@ -65,10 +83,9 @@ auth.onAuthStateChanged(async (user) => {
       await cargarProgreso();
       renderMalla();
     } catch (e) {
-      console.error("Error cargando app:", e);
+      console.error("Error cargando o renderizando:", e);
     }
   } else {
-    console.log("No hay sesión iniciada");
     usuario = null;
     loginContainer.style.display = "block";
     appContainer.style.display = "none";
@@ -77,7 +94,7 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
-// FUNCIONES
+// Funciones
 
 async function cargarMalla() {
   try {
