@@ -1,7 +1,7 @@
 // Configuración Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDbz-PJ9OSELTu1tTg2hSPAST8VouWqeEc",
-  authDomain: "homero2016.github.io", // Cambiado al dominio real
+  authDomain: "malla-medicina-unab.firebaseapp.com", // Importante: este debe ser el dominio Firebase, no github.io
   projectId: "malla-medicina-unab",
   storageBucket: "malla-medicina-unab.firebasestorage.app",
   messagingSenderId: "624124095109",
@@ -44,7 +44,7 @@ let usuario = null;
 let datosMalla = [];
 let progreso = {};
 
-// Función para manejar el resultado tras redirect (muy importante para móvil)
+// Función para manejar resultado tras redirect (esencial para móvil)
 window.onload = async () => {
   try {
     const result = await auth.getRedirectResult();
@@ -66,17 +66,17 @@ window.onload = async () => {
   }
 };
 
-// Login con redirect (Google)
+// Login con redirect usando Google
 loginBtn.onclick = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithRedirect(provider);
 };
 
-// Detectar cambios de estado de autenticación (mantener sesión)
+// Detectar cambios de estado autenticación (mantener sesión activa)
 auth.onAuthStateChanged(async (user) => {
   console.log("onAuthStateChanged:", user ? user.email : "No user");
   if (user) {
-    if (usuario && usuario.uid === user.uid) return;
+    if (usuario && usuario.uid === user.uid) return; // si es el mismo usuario no recargamos
     usuario = user;
     loginContainer.style.display = "none";
     appContainer.style.display = "block";
@@ -96,7 +96,7 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
-// Función para cargar la malla curricular desde un JSON local
+// Cargar la malla curricular desde un JSON local
 async function cargarMalla() {
   try {
     const res = await fetch("data/malla.json");
@@ -107,7 +107,7 @@ async function cargarMalla() {
   }
 }
 
-// Función para cargar progreso del usuario desde Firestore
+// Cargar progreso del usuario desde Firestore
 async function cargarProgreso() {
   if (!usuario) {
     progreso = {};
@@ -130,7 +130,7 @@ function contarCreditosAprobados(ramos, aprobados) {
     .reduce((suma, ramo) => suma + ramo.creditos, 0);
 }
 
-// Actualizar texto burbuja de créditos
+// Actualizar texto burbuja créditos
 function actualizarBurbujaCreditos(aprobados, ramos) {
   const total = contarCreditosAprobados(ramos, aprobados);
   document.getElementById("contadorCreditos").textContent = `${total} créditos aprobados`;
@@ -165,7 +165,7 @@ function renderMalla() {
 
   let aprobados = 0;
 
-  // Obtener semestres aprobados para los requisitos
+  // Obtener semestres aprobados para requisitos
   const semestresAprobados = Object.entries(progreso)
     .map(([codigo]) => {
       const ramo = datosMalla.find(r => r.codigo === codigo);
@@ -246,13 +246,6 @@ function renderMalla() {
     contenedor.appendChild(fila);
     mallaDiv.appendChild(contenedor);
   });
-
-  const porcentaje = datosMalla.length ? Math.round((aprobados / datosMalla.length) * 100) : 0;
-  resumen.textContent = `Avance: ${aprobados}/${datosMalla.length} ramos (${porcentaje}%)`;
-
-  actualizarBurbujaCreditos(Object.keys(progreso), datosMalla);
-}
-
 
   const porcentaje = datosMalla.length ? Math.round((aprobados / datosMalla.length) * 100) : 0;
   resumen.textContent = `Avance: ${aprobados}/${datosMalla.length} ramos (${porcentaje}%)`;
