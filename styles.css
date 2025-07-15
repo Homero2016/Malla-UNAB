@@ -76,3 +76,22 @@ body {
   bottom: 4px;
   right: 6px;
 }
+#burbuja-creditos {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #3498db;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  font-weight: bold;
+  font-size: 16px;
+  z-index: 9999;
+  transition: all 0.3s ease-in-out;
+}
+
+#burbuja-creditos:hover {
+  transform: scale(1.05);
+  cursor: default;
+}
