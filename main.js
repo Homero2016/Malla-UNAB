@@ -21,7 +21,7 @@ const appContainer = document.getElementById("app");
 const loginContainer = document.getElementById("login-container");
 const resumen = document.getElementById("resumen");
 
-// Burbuja créditos
+// Crear burbuja créditos
 const burbujaCreditos = document.createElement("div");
 burbujaCreditos.id = "contadorCreditos";
 burbujaCreditos.style.position = "fixed";
@@ -42,25 +42,24 @@ let usuario = null;
 let datosMalla = [];
 let progreso = {};
 
-// Login con redirect
+// Evento login con redirect
 loginBtn.onclick = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithRedirect(provider);
 };
 
-// Procesar resultado de redirect UNA sola vez al cargar la página
+// Procesar resultado redirect una vez (opcional)
 auth.getRedirectResult()
   .catch(error => {
     console.error("Error en getRedirectResult:", error);
   });
 
-// Escuchar cambios de estado: aquí cargamos la app si usuario está logueado
+// Escuchar cambios en autenticación
 auth.onAuthStateChanged(async (user) => {
   if (user) {
-    if (usuario && usuario.uid === user.uid) {
-      // Mismo usuario, no hacer nada
-      return;
-    }
+    // Si es el mismo usuario, no recargamos
+    if (usuario && usuario.uid === user.uid) return;
+    
     usuario = user;
     loginContainer.style.display = "none";
     appContainer.style.display = "block";
@@ -80,8 +79,7 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
-// Funciones como antes...
-
+// Carga datos de la malla desde JSON
 async function cargarMalla() {
   try {
     const res = await fetch("data/malla.json");
@@ -92,8 +90,12 @@ async function cargarMalla() {
   }
 }
 
+// Carga progreso usuario desde Firestore, valida usuario antes
 async function cargarProgreso() {
-  if (!usuario) return;
+  if (!usuario) {
+    progreso = {};
+    return;
+  }
   try {
     const ref = db.collection("progresos").doc(usuario.uid);
     const snap = await ref.get();
@@ -104,17 +106,20 @@ async function cargarProgreso() {
   }
 }
 
+// Contar créditos aprobados
 function contarCreditosAprobados(ramos, aprobados) {
   return ramos
     .filter(ramo => aprobados.includes(ramo.codigo))
     .reduce((suma, ramo) => suma + ramo.creditos, 0);
 }
 
+// Actualizar burbuja créditos
 function actualizarBurbujaCreditos(aprobados, ramos) {
   const total = contarCreditosAprobados(ramos, aprobados);
   document.getElementById("contadorCreditos").textContent = `${total} créditos aprobados`;
 }
 
+// Verificar si ramo está aprobado
 function estaAprobado(ramo, progreso, semestresAprobados) {
   if (ramo.tipo === "anual") {
     return progreso[ramo.codigo] && semestresAprobados.includes("7") && semestresAprobados.includes("8");
@@ -123,6 +128,7 @@ function estaAprobado(ramo, progreso, semestresAprobados) {
   }
 }
 
+// Renderizar malla
 function renderMalla() {
   mallaDiv.innerHTML = "";
 
@@ -174,7 +180,7 @@ function renderMalla() {
 
         const div = document.createElement("div");
         div.className = "ramo bloqueado";
-        div.style.background = ramo.color;
+        div.style.background = ramo.color || "#999";
         div.textContent = ramo.nombre;
 
         const requisitosArray = Array.isArray(ramo.requisitos) ? ramo.requisitos : [];
@@ -228,4 +234,3 @@ function renderMalla() {
 
   actualizarBurbujaCreditos(Object.keys(progreso), datosMalla);
 }
-
