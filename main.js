@@ -1,9 +1,9 @@
 // Configuración Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDbz-PJ9OSELTu1tTg2hSPAST8VouWqeEc",
-  authDomain: "malla-medicina-unab.firebaseapp.com", // Importante: este debe ser el dominio Firebase, no github.io
+  authDomain: "malla-medicina-unab.firebaseapp.com", // NO CAMBIES ESTO
   projectId: "malla-medicina-unab",
-  storageBucket: "malla-medicina-unab.firebasestorage.app",
+  storageBucket: "malla-medicina-unab.appspot.com",
   messagingSenderId: "624124095109",
   appId: "1:624124095109:web:83649db993b8f570afd7ec",
   measurementId: "G-QR06PHWGZX"
@@ -21,7 +21,7 @@ const appContainer = document.getElementById("app");
 const loginContainer = document.getElementById("login-container");
 const resumen = document.getElementById("resumen");
 
-// Crear y mostrar burbuja de créditos
+// Crear burbuja de créditos
 const burbujaCreditos = document.createElement("div");
 burbujaCreditos.id = "contadorCreditos";
 Object.assign(burbujaCreditos.style, {
@@ -44,7 +44,7 @@ let usuario = null;
 let datosMalla = [];
 let progreso = {};
 
-// Función para manejar resultado tras redirect (esencial para móvil)
+// Procesar login redirect (para móviles)
 window.onload = async () => {
   try {
     const result = await auth.getRedirectResult();
@@ -66,17 +66,17 @@ window.onload = async () => {
   }
 };
 
-// Login con redirect usando Google
+// Botón login
 loginBtn.onclick = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithRedirect(provider);
 };
 
-// Detectar cambios de estado autenticación (mantener sesión activa)
+// Mantener sesión iniciada
 auth.onAuthStateChanged(async (user) => {
   console.log("onAuthStateChanged:", user ? user.email : "No user");
   if (user) {
-    if (usuario && usuario.uid === user.uid) return; // si es el mismo usuario no recargamos
+    if (usuario && usuario.uid === user.uid) return;
     usuario = user;
     loginContainer.style.display = "none";
     appContainer.style.display = "block";
@@ -96,7 +96,7 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
-// Cargar la malla curricular desde un JSON local
+// Cargar JSON malla
 async function cargarMalla() {
   try {
     const res = await fetch("data/malla.json");
@@ -107,7 +107,7 @@ async function cargarMalla() {
   }
 }
 
-// Cargar progreso del usuario desde Firestore
+// Cargar progreso del usuario
 async function cargarProgreso() {
   if (!usuario) {
     progreso = {};
@@ -123,20 +123,20 @@ async function cargarProgreso() {
   }
 }
 
-// Contar créditos aprobados
+// Créditos aprobados
 function contarCreditosAprobados(ramos, aprobados) {
   return ramos
     .filter(ramo => aprobados.includes(ramo.codigo))
     .reduce((suma, ramo) => suma + ramo.creditos, 0);
 }
 
-// Actualizar texto burbuja créditos
+// Actualizar burbuja créditos
 function actualizarBurbujaCreditos(aprobados, ramos) {
   const total = contarCreditosAprobados(ramos, aprobados);
   document.getElementById("contadorCreditos").textContent = `${total} créditos aprobados`;
 }
 
-// Verificar si un ramo está aprobado
+// Comprobar si está aprobado
 function estaAprobado(ramo, progreso, semestresAprobados) {
   if (ramo.tipo === "anual") {
     return progreso[ramo.codigo] && semestresAprobados.includes("7") && semestresAprobados.includes("8");
@@ -145,7 +145,7 @@ function estaAprobado(ramo, progreso, semestresAprobados) {
   }
 }
 
-// Renderizar la malla en pantalla
+// Renderizar malla
 function renderMalla() {
   mallaDiv.innerHTML = "";
 
@@ -165,7 +165,6 @@ function renderMalla() {
 
   let aprobados = 0;
 
-  // Obtener semestres aprobados para requisitos
   const semestresAprobados = Object.entries(progreso)
     .map(([codigo]) => {
       const ramo = datosMalla.find(r => r.codigo === codigo);
