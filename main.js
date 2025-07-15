@@ -41,6 +41,19 @@ let usuario = null;
 let datosMalla = [];
 let progreso = {};
 
+// Manejar redirección (especialmente en móviles)
+(async () => {
+  try {
+    const result = await auth.getRedirectResult();
+    if (result.user) {
+      console.log("Usuario redirigido:", result.user.email);
+      // Firebase activará onAuthStateChanged automáticamente
+    }
+  } catch (error) {
+    console.error("Error en getRedirectResult:", error);
+  }
+})();
+
 // Iniciar sesión con Google
 loginBtn.onclick = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
