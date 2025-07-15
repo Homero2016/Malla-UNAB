@@ -12,7 +12,7 @@
     "nombre": "Laboratorio Biología Celular",
     "creditos": 3,
     "semestre": 1,
-    "requisitos": ["BIO130"],
+    "requisitos": [],
     "color": "#1abc9c"
   },
   {
