@@ -15,43 +15,39 @@
         Iniciar sesión con Google
       </button>
       <footer id="login-footer">
-        Cata Cathalifaud &mdash; CEMUNAB 2025
+        Cata Cathalifaud — CEMUNAB 2025
       </footer>
     </section>
 
-    <!-- App principal -->
+    <!-- App -->
     <section id="app" style="display: none;" aria-live="polite">
       <h2>Hola 👋</h2>
       <div id="resumen" aria-atomic="true"></div>
+      <div id="malla" role="region" aria-label="Malla de asignaturas"></div>
 
-      <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
-        <!-- Malla -->
-        <div id="malla" role="region" aria-label="Malla de asignaturas" style="flex: 1 1 600px;"></div>
-
-        <!-- Leyenda -->
-        <aside id="leyenda" aria-label="Leyenda de estado de asignaturas">
-          <h4>🔍 Leyenda</h4>
-          <div class="leyenda-item">
-            <div class="leyenda-cuadro c-aprobado" aria-hidden="true"></div> Aprobado
-          </div>
-          <div class="leyenda-item">
-            <div class="leyenda-cuadro c-desbloqueado" aria-hidden="true"></div> Desbloqueado
-          </div>
-          <div class="leyenda-item">
-            <div class="leyenda-cuadro c-bloqueado" aria-hidden="true"></div> Bloqueado
-          </div>
-          <div class="leyenda-item">
-            <div class="leyenda-cuadro c-anual" aria-hidden="true"></div> Pendiente Anual
-          </div>
-        </aside>
-      </div>
+      <!-- Leyenda -->
+      <aside id="leyenda" aria-label="Leyenda de estado de asignaturas">
+        <h4>🔍 Leyenda</h4>
+        <div class="leyenda-item">
+          <div class="leyenda-cuadro c-aprobado" aria-hidden="true"></div> Aprobado
+        </div>
+        <div class="leyenda-item">
+          <div class="leyenda-cuadro c-desbloqueado" aria-hidden="true"></div> Desbloqueado
+        </div>
+        <div class="leyenda-item">
+          <div class="leyenda-cuadro c-bloqueado" aria-hidden="true"></div> Bloqueado
+        </div>
+        <div class="leyenda-item">
+          <div class="leyenda-cuadro c-anual" aria-hidden="true"></div> Pendiente Anual
+        </div>
+      </aside>
     </section>
   </main>
 
   <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js
+  https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js
+  https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js
 
   <!-- Script principal -->
   <script src="main.js" defer></script>
