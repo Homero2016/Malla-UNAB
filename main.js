@@ -42,33 +42,58 @@ let usuario = null;
 let datosMalla = [];
 let progreso = {};
 
-// Evento botón login
+// Evento botón login: cambiar a signInWithRedirect para evitar error de estado
 loginBtn.onclick = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider).catch(console.error);
+  auth.signInWithRedirect(provider);
 };
 
-// Escuchar cambios de estado de autenticación
+// Al cargar la página, revisar resultado del redirect
+auth.getRedirectResult()
+  .then((result) => {
+    if (result.user) {
+      // Sesión iniciada tras redirect
+      usuario = result.user;
+      loginContainer.style.display = 'none';
+      appContainer.style.display = 'block';
+      cargarYRenderizar();
+    } else {
+      // No hay usuario (no logueado)
+      usuario = null;
+      loginContainer.style.display = 'block';
+      appContainer.style.display = 'none';
+    }
+  })
+  .catch((error) => {
+    console.error("Error en getRedirectResult:", error);
+  });
+
+// Además, escuchamos cambios de estado para detectar si el usuario ya estaba logueado
 auth.onAuthStateChanged(async (user) => {
-  if (user) {
+  if (user && user !== usuario) {
     usuario = user;
     loginContainer.style.display = 'none';
     appContainer.style.display = 'block';
-    try {
-      await cargarMalla();
-      await cargarProgreso();
-      renderMalla();
-    } catch (error) {
-      console.error("Error al cargar datos o renderizar:", error);
-    }
-  } else {
+    cargarYRenderizar();
+  } else if (!user) {
+    usuario = null;
     loginContainer.style.display = 'block';
     appContainer.style.display = 'none';
-    usuario = null;
     datosMalla = [];
     progreso = {};
   }
 });
+
+// Función para cargar datos y renderizar malla
+async function cargarYRenderizar() {
+  try {
+    await cargarMalla();
+    await cargarProgreso();
+    renderMalla();
+  } catch (error) {
+    console.error("Error al cargar datos o renderizar:", error);
+  }
+}
 
 // Función para cargar la malla desde JSON
 async function cargarMalla() {
@@ -225,4 +250,3 @@ function renderMalla() {
 
   actualizarBurbujaCreditos(Object.keys(progreso), datosMalla);
 }
-
