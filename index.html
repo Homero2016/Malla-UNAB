@@ -2,54 +2,36 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Malla Medicina</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Malla Medicina UNAB</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main>
-    <!-- Login -->
-    <section id="login-container" aria-label="Inicio de sesión">
-      <h1>Malla Medicina</h1>
-      <button id="loginBtn" aria-label="Iniciar sesión con Google">
-        Iniciar sesión con Google
-      </button>
-      <footer id="login-footer">
-        Cata Cathalifaud — CEMUNAB 2025
-      </footer>
-    </section>
+  <div id="login-container">
+    <h1>Malla Medicina</h1>
+    <h2>Iniciar sesión con Google</h2>
+    <button id="loginBtn">Ingresar con Google</button>
+    <p>Cata Cathalifaud — CEMUNAB 2025</p>
+  </div>
 
-    <!-- App -->
-    <section id="app" style="display: none;" aria-live="polite">
-      <h2>Hola 👋</h2>
-      <div id="resumen" aria-atomic="true"></div>
-      <div id="malla" role="region" aria-label="Malla de asignaturas"></div>
+  <div id="app" style="display: none;">
+    <h1>Malla Medicina UNAB</h1>
+    <div id="resumen"></div>
+    <div id="malla"></div>
+  </div>
 
-      <!-- Leyenda -->
-      <aside id="leyenda" aria-label="Leyenda de estado de asignaturas">
-        <h4>🔍 Leyenda</h4>
-        <div class="leyenda-item">
-          <div class="leyenda-cuadro c-aprobado" aria-hidden="true"></div> Aprobado
-        </div>
-        <div class="leyenda-item">
-          <div class="leyenda-cuadro c-desbloqueado" aria-hidden="true"></div> Desbloqueado
-        </div>
-        <div class="leyenda-item">
-          <div class="leyenda-cuadro c-bloqueado" aria-hidden="true"></div> Bloqueado
-        </div>
-        <div class="leyenda-item">
-          <div class="leyenda-cuadro c-anual" aria-hidden="true"></div> Pendiente Anual
-        </div>
-      </aside>
-    </section>
-  </main>
+  <div id="leyenda">
+    <h4>🔍 Leyenda</h4>
+    <div class="leyenda-item"><div class="leyenda-cuadro c-aprobado"></div> Aprobado</div>
+   "></div> Desbloqueado</div>
+    <div class="leyenda-item"><div class="leyenda-cuadro c-bloqueado"></div> Bloqueado</div>
+    <div class="leyenda-item"><div class="leyenda-cuadro c-anual"></div> Pendiente Anual</div>
+  </div>
 
-  <!-- Firebase SDKs -->
-  https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js
-  https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js
-  https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js
+  <div id="contadorCreditos">0 créditos aprobados</div>
 
-  <!-- Script principal -->
-  <script src="main.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/8e-app.js
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></scriptcom/firebasejs/8.10.0/firebase-firestore.js
+  <script src="main.js"></script>
 </body>
 </html>
