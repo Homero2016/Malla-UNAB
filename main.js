@@ -14,16 +14,6 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// Detectar WebView (como navegador interno de Instagram, Facebook, etc.)
-function esWebView() {
-  const ua = navigator.userAgent || navigator.vendor || window.opera;
-  return (/FBAN|FBAV|Instagram|Line|WhatsApp|Twitter/i.test(ua));
-}
-
-if (esWebView()) {
-  alert("⚠️ Estás usando esta app desde un navegador dentro de una app (como Instagram o Facebook). Abre este sitio en Google Chrome o Safari para que funcione correctamente.");
-}
-
 // Elementos DOM
 const loginBtn = document.getElementById("loginBtn");
 const mallaDiv = document.getElementById("malla");
@@ -31,22 +21,20 @@ const appContainer = document.getElementById("app");
 const loginContainer = document.getElementById("login-container");
 const resumen = document.getElementById("resumen");
 
-// Crear burbuja créditos
+// Burbuja de créditos
 const burbujaCreditos = document.createElement("div");
 burbujaCreditos.id = "contadorCreditos";
-Object.assign(burbujaCreditos.style, {
-  position: "fixed",
-  bottom: "20px",
-  right: "20px",
-  background: "#2ecc71",
-  color: "white",
-  padding: "12px 20px",
-  borderRadius: "30px",
-  boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
-  fontWeight: "bold",
-  fontSize: "16px",
-  zIndex: "9999"
-});
+burbujaCreditos.style.position = "fixed";
+burbujaCreditos.style.bottom = "20px";
+burbujaCreditos.style.right = "20px";
+burbujaCreditos.style.background = "#2ecc71";
+burbujaCreditos.style.color = "white";
+burbujaCreditos.style.padding = "12px 20px";
+burbujaCreditos.style.borderRadius = "30px";
+burbujaCreditos.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
+burbujaCreditos.style.fontWeight = "bold";
+burbujaCreditos.style.fontSize = "16px";
+burbujaCreditos.style.zIndex = "9999";
 document.body.appendChild(burbujaCreditos);
 
 // Variables
@@ -54,33 +42,21 @@ let usuario = null;
 let datosMalla = [];
 let progreso = {};
 
-// Evento login: popup en PC, redirect en celular/tablet
+// LOGIN CON POPUP
 loginBtn.onclick = async () => {
   const provider = new firebase.auth.GoogleAuthProvider();
   try {
-    const result = await auth.signInWithPopup(provider);
-    // Puedes usar result.user si quieres hacer algo aquí
+    await auth.signInWithPopup(provider);
   } catch (error) {
     console.error("Error al iniciar sesión con popup:", error);
-  }
-};
-  } else {
-    auth.signInWithPopup(provider).catch(() => {
-      auth.signInWithRedirect(provider);
-    });
+    alert("No se pudo iniciar sesión. Intenta de nuevo.");
   }
 };
 
-// Procesar resultado de redirect
-auth.getRedirectResult().catch(error => {
-  console.error("Error en getRedirectResult:", error);
-});
-
-// Escuchar autenticación
+// OBSERVADOR DE CAMBIOS EN SESIÓN
 auth.onAuthStateChanged(async (user) => {
   if (user) {
-    if (usuario && usuario.uid === user.uid) return;
-
+    console.log("Usuario autenticado:", user.email);
     usuario = user;
     loginContainer.style.display = "none";
     appContainer.style.display = "block";
@@ -89,9 +65,10 @@ auth.onAuthStateChanged(async (user) => {
       await cargarProgreso();
       renderMalla();
     } catch (e) {
-      console.error("Error cargando o renderizando:", e);
+      console.error("Error cargando app:", e);
     }
   } else {
+    console.log("No hay sesión iniciada");
     usuario = null;
     loginContainer.style.display = "block";
     appContainer.style.display = "none";
@@ -100,7 +77,8 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
-// Funciones principales
+// FUNCIONES
+
 async function cargarMalla() {
   try {
     const res = await fetch("data/malla.json");
@@ -134,7 +112,7 @@ function contarCreditosAprobados(ramos, aprobados) {
 
 function actualizarBurbujaCreditos(aprobados, ramos) {
   const total = contarCreditosAprobados(ramos, aprobados);
-  burbujaCreditos.textContent = `${total} créditos aprobados`;
+  document.getElementById("contadorCreditos").textContent = `${total} créditos aprobados`;
 }
 
 function estaAprobado(ramo, progreso, semestresAprobados) {
@@ -159,7 +137,7 @@ function renderMalla() {
     { titulo: "8° Semestre", incluye: [8] },
     { titulo: "5° Año", incluye: [9, 10] },
     { titulo: "6° Año", incluye: [11, 12] },
-    { titulo: "7° Año", incluye: [13, 14] }
+    { titulo: "7° Año", incluye: [13, 14] },
   ];
 
   let aprobados = 0;
