@@ -49,42 +49,41 @@ loginBtn.onclick = () => {
 };
 
 // Procesar resultado de redirect al cargar la página (una sola vez)
-auth.getRedirectResult()
-  .then(async (result) => {
+window.onload = async () => {
+  console.log("Esperando resultado redirect...");
+  try {
+    const result = await auth.getRedirectResult();
     if (result.user) {
       usuario = result.user;
+      console.log("Usuario tras redirect:", usuario.email);
       loginContainer.style.display = "none";
       appContainer.style.display = "block";
-      try {
-        await cargarMalla();
-        await cargarProgreso();
-        renderMalla();
-      } catch (e) {
-        console.error("Error cargando o renderizando:", e);
-      }
+      await cargarMalla();
+      await cargarProgreso();
+      renderMalla();
+    } else {
+      console.log("No hay usuario tras redirect");
+      loginContainer.style.display = "block";
+      appContainer.style.display = "none";
     }
-  })
-  .catch((error) => {
+  } catch (error) {
     console.error("Error en getRedirectResult:", error);
-  });
+  }
+};
 
-// Escuchar cambios de estado (esto maneja que el usuario ya esté logueado)
+// Luego escucha cambios de sesión normalmente
 auth.onAuthStateChanged(async (user) => {
+  console.log("onAuthStateChanged:", user?.email || "No user");
   if (user) {
     if (usuario && usuario.uid === user.uid) {
-      // Ya estamos con ese usuario, no hacer nada
       return;
     }
     usuario = user;
     loginContainer.style.display = "none";
     appContainer.style.display = "block";
-    try {
-      await cargarMalla();
-      await cargarProgreso();
-      renderMalla();
-    } catch (e) {
-      console.error("Error cargando o renderizando:", e);
-    }
+    await cargarMalla();
+    await cargarProgreso();
+    renderMalla();
   } else {
     usuario = null;
     loginContainer.style.display = "block";
