@@ -41,15 +41,12 @@ let usuario = null;
 let datosMalla = [];
 let progreso = {};
 
-// Manejar redirección (especialmente en móviles)
+// Redirección
 (async () => {
   try {
     const result = await auth.getRedirectResult();
     if (result.user) {
       alert("✅ Inicio de sesión exitoso: " + result.user.email);
-      // Firebase activará onAuthStateChanged automáticamente
-    } else {
-      console.log("No hay resultado de redirección");
     }
   } catch (error) {
     alert("❌ Error al volver del login: " + error.message);
@@ -57,16 +54,14 @@ let progreso = {};
   }
 })();
 
-// Iniciar sesión con Google
+// Login Google
 loginBtn.onclick = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithRedirect(provider);
 };
 
-// Escuchar cambios de autenticación
+// Cambios en autenticación
 auth.onAuthStateChanged(async (user) => {
-  console.log("onAuthStateChanged:", user ? user.email : "No user");
-
   if (user) {
     usuario = user;
     loginContainer.style.display = "none";
@@ -101,10 +96,7 @@ async function cargarMalla() {
 
 // Cargar progreso del usuario
 async function cargarProgreso() {
-  if (!usuario) {
-    progreso = {};
-    return;
-  }
+  if (!usuario) return (progreso = {});
   try {
     const ref = db.collection("progresos").doc(usuario.uid);
     const snap = await ref.get();
@@ -115,20 +107,18 @@ async function cargarProgreso() {
   }
 }
 
-// Créditos aprobados
+// Contar créditos aprobados
 function contarCreditosAprobados(ramos, aprobados) {
   return ramos
-    .filter(ramo => aprobados.includes(ramo.codigo))
-    .reduce((suma, ramo) => suma + ramo.creditos, 0);
+    .filter(r => aprobados.includes(r.codigo))
+    .reduce((suma, r) => suma + r.creditos, 0);
 }
 
-// Actualizar burbuja créditos
 function actualizarBurbujaCreditos(aprobados, ramos) {
   const total = contarCreditosAprobados(ramos, aprobados);
-  document.getElementById("contadorCreditos").textContent = `${total} créditos aprobados`;
+  burbujaCreditos.textContent = `${total} créditos aprobados`;
 }
 
-// Comprobar si está aprobado
 function estaAprobado(ramo, progreso, semestresAprobados) {
   if (ramo.tipo === "anual") {
     return progreso[ramo.codigo] && semestresAprobados.includes("7") && semestresAprobados.includes("8");
@@ -190,7 +180,9 @@ function renderMalla() {
         const div = document.createElement("div");
         div.className = "ramo bloqueado";
         div.style.background = ramo.color || "#999";
-        div.textContent = ramo.nombre;
+
+        // MOSTRAR código + nombre
+        div.textContent = `${ramo.codigo} - ${ramo.nombre}`;
 
         const requisitosArray = Array.isArray(ramo.requisitos) ? ramo.requisitos : [];
         const requisitos = requisitosArray.join(", ") || "Ninguno";
