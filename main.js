@@ -45,13 +45,27 @@ let usuario = null;
 let datosMalla = [];
 let progreso = {};
 
-// Login Google
+// Procesar resultado de redirección de login (muy importante para móviles)
+firebase.auth().getRedirectResult()
+  .then((result) => {
+    if (result.user) {
+      usuario = result.user;
+      loginContainer.style.display = "none";
+      appContainer.style.display = "block";
+      cargarMalla().then(() => cargarProgreso().then(() => renderMalla()));
+    }
+  })
+  .catch((error) => {
+    console.error("Error en getRedirectResult:", error);
+  });
+
+// Login Google con redirect (funciona mejor en móviles)
 loginBtn.onclick = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithRedirect(provider);
 };
 
-// Cambios en autenticación
+// Cambios en autenticación (cuando el estado cambia, muestra/oculta UI)
 auth.onAuthStateChanged(async (user) => {
   if (user) {
     usuario = user;
@@ -73,7 +87,8 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
-// Cargar JSON malla
+// Funciones para cargar y renderizar la malla siguen igual...
+
 async function cargarMalla() {
   try {
     const res = await fetch("data/malla.json");
@@ -84,7 +99,6 @@ async function cargarMalla() {
   }
 }
 
-// Cargar progreso del usuario
 async function cargarProgreso() {
   if (!usuario) return (progreso = {});
   try {
