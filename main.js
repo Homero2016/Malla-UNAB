@@ -52,17 +52,19 @@ loginBtn.onclick = () => {
 
 // Función que procesa resultado después del redirect
 window.onload = async () => {
+  console.log("window.onload ejecutado: intentando obtener resultado redirect...");
   try {
     const result = await auth.getRedirectResult();
     if (result.user) {
       usuario = result.user;
+      console.log("Usuario tras redirect:", usuario.email);
       loginContainer.style.display = "none";
       appContainer.style.display = "block";
       await cargarMalla();
       await cargarProgreso();
       renderMalla();
     } else {
-      // Si no hay usuario tras redirect, mostrar login
+      console.log("No hay usuario tras redirect");
       loginContainer.style.display = "block";
       appContainer.style.display = "none";
     }
@@ -75,6 +77,7 @@ window.onload = async () => {
 
 // Escuchar cambios de estado de autenticación (mantener sesión)
 auth.onAuthStateChanged(async (user) => {
+  console.log("onAuthStateChanged:", user ? user.email : "No user");
   if (user) {
     if (usuario && usuario.uid === user.uid) return; // No recargar si es el mismo usuario
     usuario = user;
