@@ -8,7 +8,6 @@ const firebaseConfig = {
   appId: "1:624124095109:web:83649db993b8f570afd7ec",
   measurementId: "G-QR06PHWGZX"
 };
-
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
@@ -22,19 +21,6 @@ const resumen = document.getElementById("resumen");
 // Crear burbuja de créditos
 const burbujaCreditos = document.createElement("div");
 burbujaCreditos.id = "contadorCreditos";
-Object.assign(burbujaCreditos.style, {
-  position: "fixed",
-  bottom: "20px",
-  right: "20px",
-  background: "#2ecc71",
-  color: "white",
-  padding: "12px 20px",
-  borderRadius: "30px",
-  boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
-  fontWeight: "bold",
-  fontSize: "16px",
-  zIndex: "9999",
-});
 document.body.appendChild(burbujaCreditos);
 
 let usuario = null;
@@ -66,7 +52,6 @@ auth.onAuthStateChanged(async (user) => {
     usuario = user;
     loginContainer.style.display = "none";
     appContainer.style.display = "block";
-
     try {
       await cargarMalla();
       await cargarProgreso();
@@ -107,7 +92,6 @@ async function cargarProgreso() {
   }
 }
 
-// Contar créditos aprobados
 function contarCreditosAprobados(ramos, aprobados) {
   return ramos
     .filter(r => aprobados.includes(r.codigo))
@@ -130,7 +114,6 @@ function estaAprobado(ramo, progreso, semestresAprobados) {
 // Renderizar malla
 function renderMalla() {
   mallaDiv.innerHTML = "";
-
   const agrupadores = [
     { titulo: "1° Semestre", incluye: [1] },
     { titulo: "2° Semestre", incluye: [2] },
@@ -146,7 +129,6 @@ function renderMalla() {
   ];
 
   let aprobados = 0;
-
   const semestresAprobados = Object.entries(progreso)
     .map(([codigo]) => {
       const ramo = datosMalla.find(r => r.codigo === codigo);
@@ -158,14 +140,12 @@ function renderMalla() {
   agrupadores.forEach(({ titulo, incluye }) => {
     const contenedor = document.createElement("div");
     contenedor.className = "semestre";
-
     const encabezado = document.createElement("h3");
     encabezado.textContent = `📘 ${titulo}`;
     contenedor.appendChild(encabezado);
 
     const fila = document.createElement("div");
     fila.className = "malla-grid";
-
     const yaRenderizados = new Set();
 
     datosMalla
@@ -180,29 +160,23 @@ function renderMalla() {
         const div = document.createElement("div");
         div.className = "ramo bloqueado";
         div.style.background = ramo.color || "#999";
-
-        // MOSTRAR código + nombre
         div.textContent = `${ramo.codigo} - ${ramo.nombre}`;
 
         const requisitosArray = Array.isArray(ramo.requisitos) ? ramo.requisitos : [];
-        const requisitos = requisitosArray.join(", ") || "Ninguno";
+        const requisitos = requisitosArray.length ? requisitosArray.join(", ") : "Ninguno";
         div.title = `Créditos: ${ramo.creditos}\nRequisitos: ${requisitos}`;
 
-        const desbloqueado = !requisitosArray.length || requisitosArray.every(codigoReq => {
-          const ramoReq = datosMalla.find(r => r.codigo === codigoReq);
-          return ramoReq && estaAprobado(ramoReq, progreso, semestresAprobados);
-        });
+        const desbloqueado = !requisitosArray.length ||
+          requisitosArray.every(codigoReq => {
+            const ramoReq = datosMalla.find(r => r.codigo === codigoReq);
+            return ramoReq && estaAprobado(ramoReq, progreso, semestresAprobados);
+          });
 
         const aprobado = estaAprobado(ramo, progreso, semestresAprobados);
 
         if (desbloqueado) {
           div.classList.remove("bloqueado");
           div.classList.add("desbloqueado");
-          div.style.outline = "3px dashed #ffffff";
-          div.style.filter = "brightness(1.1)";
-          div.style.transform = "scale(1.02)";
-          div.style.transition = "all 0.3s";
-
           div.onclick = async () => {
             if (progreso[ramo.codigo]) {
               delete progreso[ramo.codigo];
@@ -232,6 +206,5 @@ function renderMalla() {
 
   const porcentaje = datosMalla.length ? Math.round((aprobados / datosMalla.length) * 100) : 0;
   resumen.textContent = `Avance: ${aprobados}/${datosMalla.length} ramos (${porcentaje}%)`;
-
   actualizarBurbujaCreditos(Object.keys(progreso), datosMalla);
 }
