@@ -52,13 +52,11 @@ loginBtn.onclick = () => {
 auth.getRedirectResult()
   .then((result) => {
     if (result.user) {
-      // Sesión iniciada tras redirect
       usuario = result.user;
       loginContainer.style.display = 'none';
       appContainer.style.display = 'block';
       cargarYRenderizar();
     } else {
-      // No hay usuario (no logueado)
       usuario = null;
       loginContainer.style.display = 'block';
       appContainer.style.display = 'none';
@@ -68,13 +66,13 @@ auth.getRedirectResult()
     console.error("Error en getRedirectResult:", error);
   });
 
-// Además, escuchamos cambios de estado para detectar si el usuario ya estaba logueado
+// Escuchar cambios de estado para detectar usuario activo
 auth.onAuthStateChanged(async (user) => {
   if (user && user !== usuario) {
     usuario = user;
     loginContainer.style.display = 'none';
     appContainer.style.display = 'block';
-    cargarYRenderizar();
+    await cargarYRenderizar();
   } else if (!user) {
     usuario = null;
     loginContainer.style.display = 'block';
@@ -86,6 +84,10 @@ auth.onAuthStateChanged(async (user) => {
 
 // Función para cargar datos y renderizar malla
 async function cargarYRenderizar() {
+  if (!usuario) {
+    console.warn("No hay usuario para cargar progreso.");
+    return;
+  }
   try {
     await cargarMalla();
     await cargarProgreso();
@@ -108,6 +110,11 @@ async function cargarMalla() {
 
 // Función para cargar progreso del usuario desde Firestore
 async function cargarProgreso() {
+  if (!usuario) {
+    console.warn("No hay usuario para cargar progreso.");
+    progreso = {};
+    return;
+  }
   try {
     const ref = db.collection("progresos").doc(usuario.uid);
     const snap = await ref.get();
