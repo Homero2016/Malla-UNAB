@@ -153,3 +153,83 @@ body {
 .c-desbloqueado { background: #5dade2; }
 .c-bloqueado { background: #ccc; }
 .c-anual { background: #fff3cd; border: 1px dashed #ffa500; }
+/* Fondo con un degradado suave */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+/* Contenedor centrado con sombra y fondo semi-transparente */
+#login-container {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 40px 60px 60px; /* Más espacio abajo para el footer */
+  border-radius: 15px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(8.5px);
+  -webkit-backdrop-filter: blur(8.5px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  text-align: center;
+  max-width: 320px;
+  width: 90%;
+  position: relative;
+}
+
+/* Título con fuente más grande y elegante */
+#login-container h1 {
+  font-weight: 700;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  letter-spacing: 1.2px;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+}
+
+/* Botón atractivo y moderno */
+#loginBtn {
+  background: #ffffff;
+  color: #2575fc;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(37, 117, 252, 0.4);
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  width: 100%;
+  margin-bottom: 40px; /* espacio para el footer */
+}
+
+#loginBtn:hover {
+  background: #1a53d7;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Texto pequeño abajo con creador e institución */
+#login-footer {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
+  font-style: italic;
+  user-select: none;
+}
+
+/* Animación suave para el contenedor */
+#login-container {
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(30px);}
+  to {opacity: 1; transform: translateY(0);}
+}
