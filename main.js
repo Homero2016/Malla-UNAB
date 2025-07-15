@@ -44,42 +44,17 @@ let usuario = null;
 let datosMalla = [];
 let progreso = {};
 
-// Login con redirect para mejor compatibilidad móvil y escritorio
+// Login con redirect
 loginBtn.onclick = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithRedirect(provider);
 };
 
-// Función que procesa resultado después del redirect
-window.onload = async () => {
-  console.log("window.onload ejecutado: intentando obtener resultado redirect...");
-  try {
-    const result = await auth.getRedirectResult();
-    if (result.user) {
-      usuario = result.user;
-      console.log("Usuario tras redirect:", usuario.email);
-      loginContainer.style.display = "none";
-      appContainer.style.display = "block";
-      await cargarMalla();
-      await cargarProgreso();
-      renderMalla();
-    } else {
-      console.log("No hay usuario tras redirect");
-      loginContainer.style.display = "block";
-      appContainer.style.display = "none";
-    }
-  } catch (error) {
-    console.error("Error en getRedirectResult:", error);
-    loginContainer.style.display = "block";
-    appContainer.style.display = "none";
-  }
-};
-
-// Escuchar cambios de estado de autenticación (mantener sesión)
+// Detectar cambios de estado de autenticación
 auth.onAuthStateChanged(async (user) => {
   console.log("onAuthStateChanged:", user ? user.email : "No user");
   if (user) {
-    if (usuario && usuario.uid === user.uid) return; // No recargar si es el mismo usuario
+    if (usuario && usuario.uid === user.uid) return;
     usuario = user;
     loginContainer.style.display = "none";
     appContainer.style.display = "block";
@@ -99,7 +74,7 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
-// Función para cargar la malla curricular desde un JSON local
+// Cargar malla desde JSON
 async function cargarMalla() {
   try {
     const res = await fetch("data/malla.json");
@@ -110,7 +85,7 @@ async function cargarMalla() {
   }
 }
 
-// Función para cargar progreso del usuario desde Firestore
+// Cargar progreso desde Firestore
 async function cargarProgreso() {
   if (!usuario) {
     progreso = {};
@@ -133,7 +108,7 @@ function contarCreditosAprobados(ramos, aprobados) {
     .reduce((suma, ramo) => suma + ramo.creditos, 0);
 }
 
-// Actualizar texto de burbuja de créditos
+// Actualizar texto burbuja
 function actualizarBurbujaCreditos(aprobados, ramos) {
   const total = contarCreditosAprobados(ramos, aprobados);
   document.getElementById("contadorCreditos").textContent = `${total} créditos aprobados`;
@@ -148,7 +123,7 @@ function estaAprobado(ramo, progreso, semestresAprobados) {
   }
 }
 
-// Renderizar la malla en pantalla
+// Renderizar malla
 function renderMalla() {
   mallaDiv.innerHTML = "";
 
@@ -168,7 +143,6 @@ function renderMalla() {
 
   let aprobados = 0;
 
-  // Obtener semestres aprobados para los requisitos
   const semestresAprobados = Object.entries(progreso)
     .map(([codigo]) => {
       const ramo = datosMalla.find(r => r.codigo === codigo);
