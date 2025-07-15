@@ -15,6 +15,26 @@ body {
   font-weight: bold;
 }
 
+/* 💡 Burbuja de créditos flotante (actualizada al ID correcto que usas en JS) */
+#contadorCreditos {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #2ecc71;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  font-weight: bold;
+  font-size: 16px;
+  z-index: 9999;
+  transition: all 0.3s ease-in-out;
+}
+#contadorCreditos:hover {
+  transform: scale(1.05);
+  cursor: default;
+}
+
 .semestre {
   margin: 30px auto;
   max-width: 800px;
@@ -47,25 +67,34 @@ body {
   font-size: 14px;
   position: relative;
   transition: transform 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .ramo:hover {
   transform: scale(1.03);
 }
 
+/* 🔒 Ramo bloqueado */
 .bloqueado {
   background: #ccc !important;
   text-decoration: line-through;
   cursor: not-allowed;
+  opacity: 0.5;
 }
 
+/* ✅ Ramo aprobado */
 .aprobado {
   background: #2ecc71 !important;
+  box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
 }
+
+/* ⏳ Ramo anual en espera */
 .pendiente-anual {
   border: 2px dashed #ffa500;
   opacity: 0.85;
   position: relative;
+  background: #fff3cd !important;
+  color: #333 !important;
 }
 
 .pendiente-anual::after {
@@ -76,22 +105,11 @@ body {
   bottom: 4px;
   right: 6px;
 }
-#burbuja-creditos {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background-color: #3498db;
-  color: white;
-  padding: 12px 20px;
-  border-radius: 999px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  font-weight: bold;
-  font-size: 16px;
-  z-index: 9999;
-  transition: all 0.3s ease-in-out;
-}
 
-#burbuja-creditos:hover {
-  transform: scale(1.05);
-  cursor: default;
+/* 🟢 Ramo desbloqueado (pero aún no aprobado) */
+.desbloqueado {
+  opacity: 1;
+  filter: brightness(1.1);
+  border: 2px solid white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.15);
 }
