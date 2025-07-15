@@ -19,7 +19,7 @@ const loginContainer = document.getElementById("login-container");
 const resumen = document.getElementById("resumen");
 
 const burbujaCreditos = document.createElement("div");
-burbujaCreditos.id = "contadorCreditos";
+burbujaCreditos.id = "contadorCreditos"; // debe coincidir con el CSS
 burbujaCreditos.style.position = "fixed";
 burbujaCreditos.style.bottom = "20px";
 burbujaCreditos.style.right = "20px";
@@ -210,4 +210,5 @@ function renderMalla() {
   const porcentaje = datosMalla.length ? Math.round((aprobados / datosMalla.length) * 100) : 0;
   resumen.textContent = `Avance: ${aprobados}/${datosMalla.length} ramos (${porcentaje}%)`;
 
-  actualizarBurbujaCreditos(Object.keys(progreso), datosMalla);}
+  actualizarBurbujaCreditos(Object.keys(progreso), datosMalla);
+}
