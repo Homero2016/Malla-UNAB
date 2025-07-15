@@ -23,22 +23,27 @@ const burbujaCreditos = document.createElement("div");
 burbujaCreditos.id = "contadorCreditos";
 document.body.appendChild(burbujaCreditos);
 
+// Crear tooltip emergente para requisitos
+const tooltip = document.createElement("div");
+tooltip.id = "tooltip";
+tooltip.style.cssText = `
+  position: absolute;
+  background: #fff;
+  color: #333;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  font-size: 14px;
+  z-index: 99999;
+  display: none;
+  max-width: 220px;
+  pointer-events: none;
+`;
+document.body.appendChild(tooltip);
+
 let usuario = null;
 let datosMalla = [];
 let progreso = {};
-
-// Redirección
-(async () => {
-  try {
-    const result = await auth.getRedirectResult();
-    if (result.user) {
-      alert("✅ Inicio de sesión exitoso: " + result.user.email);
-    }
-  } catch (error) {
-    alert("❌ Error al volver del login: " + error.message);
-    console.error("Error en getRedirectResult:", error);
-  }
-})();
 
 // Login Google
 loginBtn.onclick = () => {
@@ -111,6 +116,17 @@ function estaAprobado(ramo, progreso, semestresAprobados) {
   }
 }
 
+// Mostrar tooltip con requisitos
+function mostrarTooltip(e, texto) {
+  tooltip.innerText = texto;
+  tooltip.style.top = `${e.pageY + 10}px`;
+  tooltip.style.left = `${e.pageX + 10}px`;
+  tooltip.style.display = "block";
+}
+function ocultarTooltip() {
+  tooltip.style.display = "none";
+}
+
 // Renderizar malla
 function renderMalla() {
   mallaDiv.innerHTML = "";
@@ -146,7 +162,6 @@ function renderMalla() {
 
     const fila = document.createElement("div");
     fila.className = "malla-grid";
-    const yaRenderizados = new Set();
 
     datosMalla
       .filter(r => {
@@ -154,17 +169,14 @@ function renderMalla() {
         return s.some(sem => incluye.includes(sem));
       })
       .forEach(ramo => {
-        if (yaRenderizados.has(ramo.codigo)) return;
-        yaRenderizados.add(ramo.codigo);
-
         const div = document.createElement("div");
         div.className = "ramo bloqueado";
         div.style.background = ramo.color || "#999";
-        div.textContent = `${ramo.codigo} - ${ramo.nombre}`;
+        div.textContent = ramo.nombre;
 
         const requisitosArray = Array.isArray(ramo.requisitos) ? ramo.requisitos : [];
-        const requisitos = requisitosArray.length ? requisitosArray.join(", ") : "Ninguno";
-        div.title = `Créditos: ${ramo.creditos}\nRequisitos: ${requisitos}`;
+        const requisitosTexto = requisitosArray.length ? requisitosArray.join(", ") : "Ninguno";
+        const tooltipTexto = `Créditos: ${ramo.creditos}\nRequisitos: ${requisitosTexto}`;
 
         const desbloqueado = !requisitosArray.length ||
           requisitosArray.every(codigoReq => {
@@ -196,6 +208,11 @@ function renderMalla() {
           div.classList.add("pendiente-anual");
           div.textContent += " ⏳";
         }
+
+        div.addEventListener("mouseenter", e => mostrarTooltip(e, tooltipTexto));
+        div.addEventListener("mouseleave", ocultarTooltip);
+        div.addEventListener("touchstart", e => mostrarTooltip(e, tooltipTexto));
+        div.addEventListener("touchend", ocultarTooltip);
 
         fila.appendChild(div);
       });
