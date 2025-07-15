@@ -1,7 +1,7 @@
 // Configuración Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDbz-PJ9OSELTu1tTg2hSPAST8VouWqeEc",
-  authDomain: "malla-medicina-unab.firebaseapp.com", // NO CAMBIES ESTO
+  authDomain: "malla-medicina-unab.firebaseapp.com",
   projectId: "malla-medicina-unab",
   storageBucket: "malla-medicina-unab.appspot.com",
   messagingSenderId: "624124095109",
