@@ -116,7 +116,6 @@ function estaAprobado(ramo, progreso, semestresAprobados) {
   }
 }
 
-// Mostrar tooltip con requisitos
 function mostrarTooltip(e, texto) {
   tooltip.innerText = texto;
   tooltip.style.top = `${e.pageY + 10}px`;
@@ -127,7 +126,6 @@ function ocultarTooltip() {
   tooltip.style.display = "none";
 }
 
-// Renderizar malla
 function renderMalla() {
   mallaDiv.innerHTML = "";
   const agrupadores = [
@@ -162,6 +160,7 @@ function renderMalla() {
 
     const fila = document.createElement("div");
     fila.className = "malla-grid";
+    const yaRenderizados = new Set();
 
     datosMalla
       .filter(r => {
@@ -169,14 +168,17 @@ function renderMalla() {
         return s.some(sem => incluye.includes(sem));
       })
       .forEach(ramo => {
+        if (yaRenderizados.has(ramo.codigo)) return;
+        yaRenderizados.add(ramo.codigo);
+
         const div = document.createElement("div");
         div.className = "ramo bloqueado";
         div.style.background = ramo.color || "#999";
-        div.textContent = ramo.nombre;
+        div.textContent = `${ramo.codigo} - ${ramo.nombre}`;
 
         const requisitosArray = Array.isArray(ramo.requisitos) ? ramo.requisitos : [];
-        const requisitosTexto = requisitosArray.length ? requisitosArray.join(", ") : "Ninguno";
-        const tooltipTexto = `Créditos: ${ramo.creditos}\nRequisitos: ${requisitosTexto}`;
+        const requisitos = requisitosArray.length ? requisitosArray.join(", ") : "Ninguno";
+        const tooltipTexto = `Créditos: ${ramo.creditos}\nRequisitos: ${requisitos}`;
 
         const desbloqueado = !requisitosArray.length ||
           requisitosArray.every(codigoReq => {
