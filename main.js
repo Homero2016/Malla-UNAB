@@ -46,10 +46,13 @@ let progreso = {};
   try {
     const result = await auth.getRedirectResult();
     if (result.user) {
-      console.log("Usuario redirigido:", result.user.email);
+      alert("✅ Inicio de sesión exitoso: " + result.user.email);
       // Firebase activará onAuthStateChanged automáticamente
+    } else {
+      console.log("No hay resultado de redirección");
     }
   } catch (error) {
+    alert("❌ Error al volver del login: " + error.message);
     console.error("Error en getRedirectResult:", error);
   }
 })();
