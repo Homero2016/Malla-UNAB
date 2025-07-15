@@ -18,6 +18,21 @@ const appContainer = document.getElementById("app");
 const loginContainer = document.getElementById("login-container");
 const resumen = document.getElementById("resumen");
 
+const burbujaCreditos = document.createElement("div");
+burbujaCreditos.id = "contadorCreditos";
+burbujaCreditos.style.position = "fixed";
+burbujaCreditos.style.bottom = "20px";
+burbujaCreditos.style.right = "20px";
+burbujaCreditos.style.background = "#2ecc71";
+burbujaCreditos.style.color = "white";
+burbujaCreditos.style.padding = "12px 20px";
+burbujaCreditos.style.borderRadius = "30px";
+burbujaCreditos.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
+burbujaCreditos.style.fontWeight = "bold";
+burbujaCreditos.style.fontSize = "16px";
+burbujaCreditos.style.zIndex = "9999";
+document.body.appendChild(burbujaCreditos);
+
 let usuario = null;
 let datosMalla = [];
 let progreso = {};
@@ -40,7 +55,6 @@ auth.onAuthStateChanged(async (user) => {
       console.error("Error al cargar datos o renderizar:", error);
     }
   } else {
-    // Usuario no logueado: mostrar login, ocultar app
     loginContainer.style.display = 'block';
     appContainer.style.display = 'none';
     usuario = null;
@@ -70,12 +84,20 @@ async function cargarProgreso() {
   }
 }
 
+function contarCreditosAprobados(ramos, aprobados) {
+  return ramos
+    .filter(ramo => aprobados.includes(ramo.codigo))
+    .reduce((suma, ramo) => suma + ramo.creditos, 0);
+}
+
+function actualizarBurbujaCreditos(aprobados, ramos) {
+  const total = contarCreditosAprobados(ramos, aprobados);
+  document.getElementById("contadorCreditos").textContent = `${total} créditos aprobados`;
+}
+
 function estaAprobado(ramo, progreso, semestresAprobados) {
   if (ramo.tipo === "anual") {
-    // Considera flexibilizar esto según necesidad
-    return progreso[ramo.codigo] &&
-           semestresAprobados.includes("7") &&
-           semestresAprobados.includes("8");
+    return progreso[ramo.codigo] && semestresAprobados.includes("7") && semestresAprobados.includes("8");
   } else {
     return progreso[ramo.codigo];
   }
@@ -150,6 +172,11 @@ function renderMalla() {
           if (desbloqueado) {
             div.classList.remove("bloqueado");
             div.classList.add("desbloqueado");
+            div.style.outline = "3px dashed #ffffff";
+            div.style.filter = "brightness(1.1)";
+            div.style.transform = "scale(1.02)";
+            div.style.transition = "all 0.3s";
+
             div.onclick = async () => {
               if (progreso[ramo.codigo]) {
                 delete progreso[ramo.codigo];
@@ -182,4 +209,5 @@ function renderMalla() {
 
   const porcentaje = datosMalla.length ? Math.round((aprobados / datosMalla.length) * 100) : 0;
   resumen.textContent = `Avance: ${aprobados}/${datosMalla.length} ramos (${porcentaje}%)`;
-}
+
+  actualizarBurbujaCreditos(Object.keys(progreso), datosMalla);
