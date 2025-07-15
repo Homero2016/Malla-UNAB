@@ -210,4 +210,4 @@ function renderMalla() {
   const porcentaje = datosMalla.length ? Math.round((aprobados / datosMalla.length) * 100) : 0;
   resumen.textContent = `Avance: ${aprobados}/${datosMalla.length} ramos (${porcentaje}%)`;
 
-  actualizarBurbujaCreditos(Object.keys(progreso), datosMalla);
+  actualizarBurbujaCreditos(Object.keys(progreso), datosMalla);}
