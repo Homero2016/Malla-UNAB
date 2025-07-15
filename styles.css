@@ -9,6 +9,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 /* Contenedor login */
@@ -80,6 +81,7 @@ body {
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
   overflow-y: auto;
   box-sizing: border-box;
+  animation: fadeIn 0.8s ease-in-out;
 }
 
 /* Resumen y texto */
@@ -200,7 +202,7 @@ body {
   cursor: default;
 }
 
-/* Leyenda dentro de #app para que no aparezca en login */
+/* Leyenda dentro de #app */
 #leyenda {
   background-color: white;
   border: 2px solid #ddd;
@@ -214,7 +216,6 @@ body {
   color: #333;
 }
 
-/* Leyenda items */
 #leyenda h4 {
   margin: 0 0 8px 0;
   font-size: 16px;
@@ -241,10 +242,10 @@ body {
 .c-bloqueado { background: #ccc; }
 .c-anual { background: #fff3cd; border: 1px dashed #ffa500; }
 
-/* Responsive: tablets y celulares */
+/* Responsive para tablets y celulares */
 @media (max-width: 900px) {
   .ramo {
-    width: 45vw; /* Ajusta el ancho para pantallas chicas */
+    width: 45vw;
     font-size: 13px;
   }
 
@@ -289,6 +290,6 @@ body {
 
 /* Animación login */
 @keyframes fadeIn {
-  from {opacity: 0; transform: translateY(30px);}
-  to {opacity: 1; transform: translateY(0);}
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
