@@ -1,3 +1,4 @@
+// Configuración Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDbz-PJ9OSELTu1tTg2hSPAST8VouWqeEc",
   authDomain: "malla-medicina-unab.firebaseapp.com",
@@ -8,18 +9,21 @@ const firebaseConfig = {
   measurementId: "G-QR06PHWGZX"
 };
 
+// Inicializar Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+// Obtener elementos DOM
 const loginBtn = document.getElementById("loginBtn");
 const mallaDiv = document.getElementById("malla");
 const appContainer = document.getElementById("app");
 const loginContainer = document.getElementById("login-container");
 const resumen = document.getElementById("resumen");
 
+// Crear burbuja créditos
 const burbujaCreditos = document.createElement("div");
-burbujaCreditos.id = "contadorCreditos"; // debe coincidir con el CSS
+burbujaCreditos.id = "contadorCreditos";  // debe coincidir con CSS
 burbujaCreditos.style.position = "fixed";
 burbujaCreditos.style.bottom = "20px";
 burbujaCreditos.style.right = "20px";
@@ -33,15 +37,18 @@ burbujaCreditos.style.fontSize = "16px";
 burbujaCreditos.style.zIndex = "9999";
 document.body.appendChild(burbujaCreditos);
 
+// Variables globales
 let usuario = null;
 let datosMalla = [];
 let progreso = {};
 
+// Evento botón login
 loginBtn.onclick = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithPopup(provider).catch(console.error);
 };
 
+// Escuchar cambios de estado de autenticación
 auth.onAuthStateChanged(async (user) => {
   if (user) {
     usuario = user;
@@ -63,6 +70,7 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
+// Función para cargar la malla desde JSON
 async function cargarMalla() {
   try {
     const res = await fetch("data/malla.json");
@@ -73,6 +81,7 @@ async function cargarMalla() {
   }
 }
 
+// Función para cargar progreso del usuario desde Firestore
 async function cargarProgreso() {
   try {
     const ref = db.collection("progresos").doc(usuario.uid);
@@ -84,17 +93,20 @@ async function cargarProgreso() {
   }
 }
 
+// Contar créditos aprobados
 function contarCreditosAprobados(ramos, aprobados) {
   return ramos
     .filter(ramo => aprobados.includes(ramo.codigo))
     .reduce((suma, ramo) => suma + ramo.creditos, 0);
 }
 
+// Actualizar la burbuja de créditos
 function actualizarBurbujaCreditos(aprobados, ramos) {
   const total = contarCreditosAprobados(ramos, aprobados);
   document.getElementById("contadorCreditos").textContent = `${total} créditos aprobados`;
 }
 
+// Revisar si un ramo está aprobado
 function estaAprobado(ramo, progreso, semestresAprobados) {
   if (ramo.tipo === "anual") {
     return progreso[ramo.codigo] && semestresAprobados.includes("7") && semestresAprobados.includes("8");
@@ -103,6 +115,7 @@ function estaAprobado(ramo, progreso, semestresAprobados) {
   }
 }
 
+// Renderizar la malla curricular
 function renderMalla() {
   mallaDiv.innerHTML = '';
 
@@ -212,3 +225,4 @@ function renderMalla() {
 
   actualizarBurbujaCreditos(Object.keys(progreso), datosMalla);
 }
+
