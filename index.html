@@ -11,7 +11,7 @@
     <!-- Login -->
     <section id="login-container" aria-label="Inicio de sesión">
       <h1>Malla Medicina</h1>
-      <button id="loginBtn" aria-label="Iniciar sesión con Google">
+      <button id="loginBtn" aria-label="Iniciar sesión con Google" type="button">
         Iniciar sesión con Google
       </button>
       <footer id="login-footer">
@@ -19,16 +19,16 @@
       </footer>
     </section>
 
-    <!-- App -->
-    <section id="app" style="display: none;" aria-live="polite">
-      <h2>Hola 👋</h2>
-      <div id="resumen" aria-atomic="true"></div>
+    <!-- App principal -->
+    <section id="app" style="display: none;" aria-live="polite" aria-label="Aplicación principal">
+      <h2>Bienvenid@ a tu interfaz de malla 🩺📚</h2>
+      <div id="resumen" aria-atomic="true" aria-live="polite" role="region"></div>
       <div id="malla" role="region" aria-label="Malla de asignaturas"></div>
     </section>
   </main>
 
   <!-- Leyenda flotante -->
-  <aside id="leyenda" aria-label="Leyenda de estado de asignaturas">
+  <aside id="leyenda" aria-label="Leyenda de estado de asignaturas" hidden>
     <h4>🔍 Leyenda</h4>
     <div class="leyenda-item">
       <div class="leyenda-cuadro c-aprobado" aria-hidden="true"></div> Aprobado
